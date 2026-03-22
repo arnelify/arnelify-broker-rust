@@ -1,0 +1,24 @@
+  rust:
+    container_name: rust
+    build:
+      context: .
+      dockerfile: rust.dockerfile
+    volumes:
+      - ./:/var/www/rust
+    healthcheck:
+      start_period: 10s
+      test: ["CMD", "curl", "-f", "http://localhost:4433"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+    restart: unless-stopped
+    networks:
+      - arnelify-network
+    ports:
+      - "4433:4433"
+    tty: true

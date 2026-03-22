@@ -1,0 +1,19 @@
+networks:
+  arnelify-network:
+    name: arnelify-network
+    driver: bridge
+    
+services:
+  rust:
+    container_name: rust
+    build:
+      context: .
+      dockerfile: rust.dockerfile
+    volumes:
+      - ./:/var/www/rust
+    restart: unless-stopped
+    networks:
+      - arnelify-network
+    ports:
+      - "4433:4433"
+    tty: true
